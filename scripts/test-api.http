@@ -1,0 +1,78 @@
+### LeadOne2 API Tests
+### Utilizzare con REST Client (VS Code) o Postman
+### Base URL: http://localhost:5000
+
+@baseUrl = http://localhost:5000/api
+@token = your_jwt_token_here
+
+### 1. Registrazione nuovo utente
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin@leadone.it",
+  "password": "Admin123!",
+  "name": "Admin",
+  "surname": "LeadOne"
+}
+
+### 2. Login utente
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@leadone.it",
+  "password": "Admin123!"
+}
+
+### 3. Get utente corrente (richiede token)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### 4. Crea nuovo progetto (richiede token + ruolo Admin)
+POST {{baseUrl}}/projects
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Progetto Demo",
+  "description": "Primo progetto di test"
+}
+
+### 5. Lista tutti i progetti (richiede token)
+GET {{baseUrl}}/projects
+Authorization: Bearer {{token}}
+
+### 6. I miei progetti (richiede token)
+GET {{baseUrl}}/projects/my-projects
+Authorization: Bearer {{token}}
+
+### 7. Dettaglio progetto specifico (richiede token)
+GET {{baseUrl}}/projects/1
+Authorization: Bearer {{token}}
+
+### 8. Aggiorna progetto (richiede token + Admin)
+PUT {{baseUrl}}/projects/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Progetto Demo Aggiornato",
+  "description": "Descrizione aggiornata",
+  "isActive": true
+}
+
+### 9. Assegna utente a progetto (richiede token + Admin)
+POST {{baseUrl}}/projects/1/users/1
+Authorization: Bearer {{token}}
+
+### 10. Rimuovi utente da progetto (richiede token + Admin)
+DELETE {{baseUrl}}/projects/1/users/1
+Authorization: Bearer {{token}}
+
+###
+### NOTE:
+### 1. Dopo il login (test #2), copia il token dalla response
+### 2. Sostituisci "your_jwt_token_here" in alto con il token vero
+### 3. Oppure sostituisci {{token}} direttamente in ogni richiesta
+###
